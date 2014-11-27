@@ -1,17 +1,29 @@
 ﻿<?php
+/**
+ * Upload class file
+ *
+ * @version 1.0
+ * @author  Dmitry Balandin <dmitry.balandin.1990@gmail.com>
+ */
 
 /**
  * Class Upload
  */
 abstract class Upload
 {
+    /**
+     * @var string - dir name
+     */
     protected $dir;
-    protected $mine_types = array();
+    /**
+     * @var array - mime types
+     */
+    protected $mime_types = array();
 
     /**
-     * Verify the security of uploaded file
+     * Upload file it it's secure
      *
-     * @param $file
+     * @param string $file - file extension
      *
      * @return bool
      */
@@ -20,31 +32,31 @@ abstract class Upload
         if (!$this->isSecurity($file)) {
             return false;
         }
-        $uploadfile = $this->dir."/".$file["name"]; //Specifies the directory and file name which will be loaded
+        $uploadfile = $this->dir."/".$file["name"]; // file will be saved here
         return move_uploaded_file($file["tmp_name"], $uploadfile);
     }
 
     /**
-     * Verify the forbidden extensions
+     * Security file check
      *
-     * @param $file
+     * @param string $file - file extension
      *
      * @return bool
      */
     protected function isSecurity($file)
     {
-        $blacklist = array(".php", ".php3", ".php4", ".html", ".htm");
+        //forbidden extensions
+        $blacklist = array(".php", ".phtml", ".php3", ".php4", ".html", ".htm");
         foreach ($blacklist as $item) {
             if (preg_match("/$item\$/i", $file["name"])) {
                 return false;
             }
         }
-        //Verify permissions mime_types
+        //check allowed mime types
         if (!in_array($file["type"], $this->mime_types)) {
             return false;
         }
-
-        //Verify the file-size
+        //check file-size (not more then 2mb)
         $size = $file["size"];
         if ($size > 2048000) {
             return false;
@@ -52,4 +64,3 @@ abstract class Upload
         return true;
     }
 }
-

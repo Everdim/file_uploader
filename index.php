@@ -1,4 +1,14 @@
 ﻿<?php
+/**
+ * Index file
+ *
+ * @version 1.0
+ * @author  Dmitry Balandin <dmitry.balandin.1990@gmail.com>
+ */
+
+/**
+ * Application entry point
+ */
 require_once "lib/uploadtext_class.php";
 require_once "lib/uploadimage_class.php";
 if ($_POST["upload"]) {
@@ -11,42 +21,42 @@ if ($_POST["upload"]) {
 
 <html>
 <head>
-    <title>File uploader</title>
+    <title>Загрузка файлов</title>
 </head>
 <body>
-<h1>Upload the file</h1>
-<?
+<h1>Загрузка файлов</h1>
+<?php
 if ($_POST["upload"]) {
     if ($success_text) {
-        echo "The text file is loaded";
+        echo "Текст успено загрузился";
     } else {
-        echo "Error loading the text file";
+        echo "Ошибка при загрузке текстового файла";
     }
     echo "<br />";
     if ($success_image) {
-        echo "The picture is loaded";
+        echo "Картинка успено загрузилась";
     } else {
-        echo "Error loading the picture";
+        echo "Ошибка при загрузке картики";
     }
 }
 ?>
 <form name="myform" action="index.php" method="post" enctype="multipart/form-data">
     <table>
         <tr>
-            <td>Picture:</td>
+            <td>Изображение:</td>
             <td>
                 <input type="file" name="image"/>
             </td>
         </tr>
         <tr>
-            <td>Text file:</td>
+            <td>Текст:</td>
             <td>
                 <input type="file" name="text"/>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" name="upload" value="Upload"/>
+                <input type="submit" name="upload" value="Грузить!"/>
             </td>
         </tr>
     </table>
